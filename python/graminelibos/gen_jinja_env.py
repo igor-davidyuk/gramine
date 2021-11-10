@@ -1,5 +1,6 @@
 import os
 import pathlib
+import site
 import subprocess
 import sys
 import sysconfig
@@ -37,9 +38,8 @@ def add_globals_from_python(env):
         'purelib': pathlib.Path(paths['purelib']),
 
         # TODO rpm-based distros
-        'distlib': pathlib.Path(sysconfig.get_path('stdlib',
-                vars={'py_version_short': f'{sys.version_info[0]}.{sys.version_info[1]}'})
-            ) / 'dist-packages',
+        'distlib': pathlib.Path(
+            site.getsitepackages()[0]),
 
         'get_config_var': sysconfig.get_config_var,
         'ext_suffix': sysconfig.get_config_var('EXT_SUFFIX'),
